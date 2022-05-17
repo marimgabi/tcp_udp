@@ -1,6 +1,7 @@
 import socket
 import tqdm
 import os
+from datetime import datetime
 
 # endereço ip
 SERVER_HOST = "0.0.0.0"
@@ -29,9 +30,11 @@ print(f"[+] {address} is connected.")
 # recebe usando o socket do client
 received = client_socket.recv(BUFFER_SIZE).decode()
 filename, filesize = received.split(SEPARATOR)
+inicial_time = client_socket.recv(BUFFER_SIZE).decode()
+print(f"tempo inicial {inicial_time}")
 # remove o caminho absoluto
-filename = os.path.basename(filename)
-#filename = "teste1.txt"
+#filename = os.path.basename(filename)
+filename = "teste1.txt"
 
 filesize = int(filesize)
 
@@ -52,3 +55,8 @@ with open(filename, "wb") as f:
 # fecha o socket do client e do server
 client_socket.close()
 s.close()
+
+now = datetime.now()
+final_time = now.strftime("%H:%M:%S")
+total_time = final_time-inicial_time
+print(f"Tempo total = {total_time}")

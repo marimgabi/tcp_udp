@@ -1,18 +1,22 @@
 import socket
 import tqdm
 import os
+from datetime import datetime
 
 SEPARATOR = "<SEPARATOR>"
 BUFFER_SIZE = 4096
 
 #Endereço ip e porta do server
-host = "192.168.3.7"
+host = "10.81.64.155"
 port = 5001
 
 # arquivo a se enviado
 filename = "teste.txt"
 # tamanho do arquivo
 filesize = os.path.getsize(filename)
+
+now = datetime.now()
+current_time = now.strftime("%H:%M:%S")
 
 # criando o socket do client
 s = socket.socket()
@@ -23,6 +27,7 @@ print("[+] Connected.")
 
 # enviando o nome do arquivo e o tamanho
 s.send(f"{filename}{SEPARATOR}{filesize}".encode())
+s.send(f"{current_time}".encode())
 
 # enviando o arquivo
 progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
