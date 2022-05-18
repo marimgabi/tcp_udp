@@ -57,7 +57,5 @@ with open(filename, "wb") as f:
 client_socket.close()
 s.close()
 tend = datetime.now()
-tfinal = tend - tstart
-tfinal.strftime('%d-%m-%Y %H:%M:%S.%f')[:-3]
-print (f"\nTempo total de transmissão: {tfinal}")
+print (f"\nTempo total de transmissão: {tend - tstart}")
 print(f"Quantidade de blocos recebidos: {blocos}")
