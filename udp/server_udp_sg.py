@@ -1,5 +1,6 @@
 import socket, sys
 import tqdm
+from datetime import datetime
 
 localIP     = "0.0.0.0"
 localPort   = 5001
@@ -10,6 +11,7 @@ UDPServerSocket.bind((localIP, localPort))
 
 received, add = UDPServerSocket.recvfrom(bufferSize)
 blocos+=1
+tstart = datetime.now()
 filename, filesize = received.split(b"<SEPARATOR>")
 filename = "teste1.txt"
 filesize = int(filesize)
@@ -34,5 +36,7 @@ with open(filename, "wb") as f:
 
 
 UDPServerSocket.close()
+tend = datetime.now()
+print (f"\nTempo total de transmissão: {tend - tstart}")
 print(f"Quantidade de blocos recebidos: {blocos}")
 
