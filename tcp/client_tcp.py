@@ -7,7 +7,8 @@ BUFFER_SIZE = int(sys.argv[2])
 print(BUFFER_SIZE)
 
 #Endereço ip e porta do server
-host = "localhost"
+#host = "localhost"
+host = "192.168.3.4"
 port = 5001
 
 # arquivo a se enviado
@@ -15,6 +16,7 @@ port = 5001
 filename = sys.argv[1]
 # tamanho do arquivo
 filesize = os.path.getsize(filename)
+blocos = 0
 
 # criando o socket do client
 s = socket.socket()
@@ -25,7 +27,7 @@ print("[+] Connected.")
 
 # enviando o nome do arquivo e o tamanho
 s.send(f"{filename}{SEPARATOR}{filesize}".encode())
-
+blocos += 1
 
 # enviando o arquivo
 progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
@@ -38,7 +40,9 @@ with open(filename, "rb") as f:
             break
         # sendall para garantir a transmissão
         s.sendall(bytes_read)
+        blocos += 1
         # atualização da barra de progresso
         progress.update(len(bytes_read))
 # fecha o socket
 s.close()
+print(f"Quantidade de blocos enviados: {blocos}")

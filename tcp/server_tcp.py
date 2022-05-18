@@ -9,7 +9,7 @@ SERVER_PORT = 5001
 
 BUFFER_SIZE = int(sys.argv[1])
 SEPARATOR = "<SEPARATOR>"
-
+blocos = 0
 # criando socket do server
 # TCP socket
 s = socket.socket()
@@ -30,6 +30,7 @@ print(f"[+] {address} is connected.")
 # recebe as informações o arquivo
 # recebe usando o socket do client
 received = client_socket.recv(BUFFER_SIZE).decode()
+blocos += 1
 filename, filesize = received.split(SEPARATOR)
 # remove o caminho absoluto
 filename = os.path.basename(filename)
@@ -48,6 +49,7 @@ with open(filename, "wb") as f:
             break
         # escreve no arquivo os bytes recebidos
         f.write(bytes_read)
+        blocos += 1
         # atualiza a barra de progresso
         progress.update(len(bytes_read))
 
@@ -56,3 +58,4 @@ client_socket.close()
 s.close()
 tend = datetime.now()
 print (f"\nTempo total de transmissão: {tend - tstart}")
+print(f"Quantidade de blocos recebidos: {blocos}")
