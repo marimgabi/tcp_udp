@@ -1,16 +1,18 @@
-import socket
+import socket, sys
 import tqdm
 import os
 
 SEPARATOR = "<SEPARATOR>"
-BUFFER_SIZE = 4096
+BUFFER_SIZE = int(sys.argv[2])
+print(BUFFER_SIZE)
 
 #Endereço ip e porta do server
 host = "localhost"
 port = 5001
 
 # arquivo a se enviado
-filename = "teste.txt"
+#filename = "teste.txt"
+filename = sys.argv[1]
 # tamanho do arquivo
 filesize = os.path.getsize(filename)
 

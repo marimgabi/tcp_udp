@@ -1,4 +1,4 @@
-import socket
+import socket, sys
 import tqdm
 import os
 from datetime import datetime
@@ -7,7 +7,7 @@ from datetime import datetime
 SERVER_HOST = "0.0.0.0"
 SERVER_PORT = 5001
 
-BUFFER_SIZE = 4096
+BUFFER_SIZE = int(sys.argv[1])
 SEPARATOR = "<SEPARATOR>"
 
 # criando socket do server
@@ -32,8 +32,8 @@ print(f"[+] {address} is connected.")
 received = client_socket.recv(BUFFER_SIZE).decode()
 filename, filesize = received.split(SEPARATOR)
 # remove o caminho absoluto
-#filename = os.path.basename(filename)
-filename = "teste1.txt"
+filename = os.path.basename(filename)
+#filename = "teste1.txt"
 
 filesize = int(filesize)
 
