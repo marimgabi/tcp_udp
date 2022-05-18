@@ -1,18 +1,17 @@
-import socket
+import socket, sys
 import os
 import time
 import tqdm
 
 #msgFromClient = "Hello UDP Server"
 
-filename = "teste.txt"
+filename = sys.argv[1]
 filesize  = os.path.getsize(filename)
 host = "localhost"
 port = 5001
-#serverAddressPort = ("10.81.64.106", 5001)
 SEPARATOR = "<SEPARATOR>"
 
-buffer_length = 1024
+buffer_length = int(sys.argv[2])
  
 # socket udp do cliente
 UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)

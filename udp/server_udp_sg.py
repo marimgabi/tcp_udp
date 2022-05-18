@@ -1,12 +1,9 @@
-import socket, select
+import socket, sys
 import tqdm
 
-localIP     = "localhost"
+localIP     = "0.0.0.0"
 localPort   = 5001
-bufferSize  = 1024
-
-msgFromServer = "Hello UDP Client"
-bytesToSend = str.encode(msgFromServer)
+bufferSize  = int(sys.argv[1])
 
 UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 UDPServerSocket.bind((localIP, localPort))
