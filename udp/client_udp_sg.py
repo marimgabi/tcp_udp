@@ -7,16 +7,17 @@ import tqdm
 
 filename = sys.argv[1]
 filesize  = os.path.getsize(filename)
-host = "localhost"
+host = "192.168.3.4"
 port = 5001
 SEPARATOR = "<SEPARATOR>"
-
+blocos =0 
 buffer_length = int(sys.argv[2])
  
 # socket udp do cliente
 UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 
 UDPClientSocket.sendto(f"{filename}{SEPARATOR}{filesize}".encode(),(host,port))
+blocos += 1
 
 f = open(filename, "rb")
 
@@ -27,11 +28,12 @@ progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scal
 while True:
     progress.update(len(data))
     if UDPClientSocket.sendto(data, (host, port)):
+        blocos += 1
         data = f.read(buffer_length)
         #time.sleep(0.01)  # 0.01 segundos
     else:
         break
 UDPClientSocket.close()
 f.close()
-#print("File has been Transferred")
+print(f"Blocos enviados: {blocos}")
 

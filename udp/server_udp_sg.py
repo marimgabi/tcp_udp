@@ -4,11 +4,12 @@ import tqdm
 localIP     = "0.0.0.0"
 localPort   = 5001
 bufferSize  = int(sys.argv[1])
-
+blocos = 0
 UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 UDPServerSocket.bind((localIP, localPort))
 
 received, add = UDPServerSocket.recvfrom(bufferSize)
+blocos+=1
 filename, filesize = received.split(b"<SEPARATOR>")
 filename = "teste1.txt"
 filesize = int(filesize)
@@ -20,6 +21,7 @@ with open(filename, "wb") as f:
     while True:
         # lê 1024 bytes do socket
         bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
+        blocos+=1
         message = bytesAddressPair[0]
         address = bytesAddressPair[1]
         if not message:
@@ -32,4 +34,5 @@ with open(filename, "wb") as f:
 
 
 UDPServerSocket.close()
+print(f"Quantidade de blocos recebidos: {blocos}")
 
