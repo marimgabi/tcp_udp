@@ -6,11 +6,12 @@ localIP     = "0.0.0.0"
 localPort   = 5001
 bufferSize  = int(sys.argv[1])
 blocos = 0
+
 UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 UDPServerSocket.bind((localIP, localPort))
 
 received, add = UDPServerSocket.recvfrom(bufferSize)
-blocos+=1
+#blocos+=1
 tstart = datetime.now()
 filename, filesize = received.split(b"<SEPARATOR>")
 filename = "teste1.txt"
@@ -23,7 +24,7 @@ with open(filename, "wb") as f:
     while True:
         # lê 1024 bytes do socket
         bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
-        blocos+=1
+        #blocos+=1
         message = bytesAddressPair[0]
         address = bytesAddressPair[1]
         if not message:
@@ -31,9 +32,9 @@ with open(filename, "wb") as f:
             break
         # escreve no arquivo os bytes recebidos
         f.write(message)
+        blocos+=1
         # atualiza a barra de progresso
         progress.update(len(message))
-
 
 UDPServerSocket.close()
 tend = datetime.now()

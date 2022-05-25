@@ -30,11 +30,11 @@ print(f"[+] {address} is connected.")
 # recebe as informações o arquivo
 # recebe usando o socket do client
 received = client_socket.recv(BUFFER_SIZE).decode()
-blocos += 1
+#blocos += 1
 filename, filesize = received.split(SEPARATOR)
 # remove o caminho absoluto
 filename = os.path.basename(filename)
-#filename = "teste1.txt"
+filename = "teste1.txt"
 
 filesize = int(filesize)
 

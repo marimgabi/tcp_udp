@@ -8,7 +8,7 @@ print(BUFFER_SIZE)
 
 #Endereço ip e porta do server
 #host = "localhost"
-host = "192.168.3.4"
+host = "192.168.100.102"
 port = 5001
 
 # arquivo a se enviado
